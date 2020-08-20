@@ -1,14 +1,19 @@
 import React from "react";
-import "./App.css";
 //Components
-import { Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import MainLayout from "./layouts/MainLayout";
+
+import "antd/dist/antd.css";
+import "./App.css";
 
 function App() {
   return (
     <div className="App">
       <Router>
         <Switch>
-          <Route path="/"></Route>
+          <Route path="/">
+            <MainLayout />
+          </Route>
           <Route path="/admin"></Route>
         </Switch>
       </Router>
