@@ -3,7 +3,7 @@ import MainRoutes from "../../routes/MainRoutes";
 //Components
 import NavBar from "../../components/NavBar";
 import Footer from "../../components/Footer";
-import { Row } from "antd";
+import ChatButton from "../../components/ChatButton";
 
 export default function MainLayout() {
   return (
@@ -11,6 +11,7 @@ export default function MainLayout() {
       <NavBar />
       <MainRoutes />
       <Footer />
+      <ChatButton />
     </div>
   );
 }

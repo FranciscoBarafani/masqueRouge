@@ -1,2 +1,12 @@
 .buy-button {
+  margin-top: 10px;
+  .ant-btn {
+    color: #3e2f5b;
+    border-color: #3e2f5b;
+    &:hover {
+      border-color: #3e2f5b;
+      color: white;
+      background-color: #3e2f5b;
+    }
+  }
 }

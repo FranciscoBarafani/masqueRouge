@@ -1,7 +1,6 @@
 import React from "react";
 //Components
 import { Card as MyCard, Button } from "antd";
-import BuyButton from "../BuyButton";
 
 export default function Card(props) {
   const { title } = props;
@@ -17,7 +16,6 @@ export default function Card(props) {
       }
     >
       <MyCard.Meta title={"$650"} description="Desripcion del Producto" />
-      <BuyButton />
     </MyCard>
   );
 }

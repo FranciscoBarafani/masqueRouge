@@ -1,0 +1,15 @@
+.chat-button {
+  .ant-avatar {
+    position: fixed;
+    right: 30px;
+    bottom: 45px;
+    background-color: #3e2f5b;
+
+    &:hover {
+      -webkit-transition: background-color ease-out 0.3s;
+      -o-transition: background-color ease-out 0.3s;
+      transition: background-color ease-out 0.3s;
+      background-color: #4d3a72;
+    }
+  }
+}
