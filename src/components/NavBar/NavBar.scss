@@ -1,3 +1,14 @@
 .nav-bar {
-  background-color: gray;
+  background-color: #3e2f5b;
+  display: flex;
+  align-content: center;
+  height: 50px;
+
+  h3 {
+    color: white;
+  }
+
+  .ant-row {
+    width: 100%;
+  }
 }
