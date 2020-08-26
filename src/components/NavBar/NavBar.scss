@@ -11,4 +11,28 @@
   .ant-row {
     width: 100%;
   }
+
+  .ant-input-wrapper {
+    border: 1px solid white;
+    border-radius: 2px;
+  }
+
+  .ant-input {
+    &:hover,
+    &:focus {
+      border-color: #3e2f5b;
+    }
+  }
+
+  .ant-btn {
+    background-color: #3e2f5b;
+    border: 0px;
+
+    &:hover {
+      background-color: white;
+      .anticon {
+        color: #3e2f5b !important;
+      }
+    }
+  }
 }
