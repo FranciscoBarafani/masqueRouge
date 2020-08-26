@@ -1,6 +1,6 @@
 import React from "react";
 //Components
-import { Row, Col, Image } from "antd";
+import { Row, Col } from "antd";
 import Carousel from "../../components/Carousel";
 import AddsSlider from "../../components/AddsSlider";
 //Images
