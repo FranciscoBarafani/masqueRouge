@@ -6,9 +6,11 @@ import img1 from "../../assets/slideradd1.webp";
 import img2 from "../../assets/slideradd2.webp";
 import img3 from "../../assets/slideradd3.webp";
 
+import "./AddsSlider.scss";
+
 export default function AddSlider() {
   return (
-    <div>
+    <div className="add-slider">
       <Carousel autoplay>
         <div>
           <img src={img1} alt="Propaganda 1" />

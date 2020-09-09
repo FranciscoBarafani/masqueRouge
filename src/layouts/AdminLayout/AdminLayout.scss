@@ -1,2 +1,14 @@
-.main-layout {
+.admin-layout {
+  &_top-bar {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    background-color: #001529;
+    box-shadow: 0px 3px 15px gray;
+
+    .ant-btn {
+      margin-top: 10px;
+      margin-left: 20px;
+    }
+  }
 }
