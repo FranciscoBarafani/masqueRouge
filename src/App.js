@@ -1,6 +1,11 @@
 import React from "react";
 //Components
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
 import MainLayout from "./layouts/MainLayout";
 import AdminLayout from "./layouts/AdminLayout";
 
@@ -12,7 +17,8 @@ function App() {
     <div className="App">
       <Router>
         <Switch>
-          <Route path="/" exact>
+          <Redirect path="/" exact to="/home" />
+          <Route path="/home">
             <MainLayout />
           </Route>
           <Route path="/admin">

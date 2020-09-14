@@ -1,0 +1,17 @@
+.cartDrawer {
+  .ant-drawer {
+    &-header {
+      background: #3e2f5b;
+    }
+    &-title {
+      color: white;
+    }
+    &-close {
+      color: white;
+
+      &:hover {
+        color: lightgray;
+      }
+    }
+  }
+}

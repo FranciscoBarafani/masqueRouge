@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 //Components
-import { Form, Input, InputNumber, Button, Upload, Modal, message } from "antd";
+import { Form, Button, Upload, Modal } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
-//Functions
 import { uploadObject } from "../../utils/FirebaseUploads";
 
-import "./ProductForm.scss";
+import "./SlideForm.scss";
 
-export default function ProductForm() {
+export default function SlideForm() {
   const [image, setImage] = useState({ fileList: [] });
   const [previewVisible, setPreviewVisible] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
@@ -20,12 +19,7 @@ export default function ProductForm() {
     //Generating a random number
     object.random = Math.random();
     //This function uploads the object and the image
-    uploadObject(
-      object,
-      image.fileList[0].originFileObj,
-      "products",
-      setLoading
-    );
+    uploadObject(object, image.fileList[0].originFileObj, "slides", setLoading);
   };
 
   //This functions gets the base64 from the selected file to get the image
@@ -65,43 +59,15 @@ export default function ProductForm() {
 
   return (
     <div className="form">
-      <Form name="productForm" onFinish={onFinish}>
-        <h3>Cargar Producto</h3>
-        <Form.Item
-          name="name"
-          label="Nombre"
-          rules={[
-            {
-              required: true,
-              message: "Debes ingresar el nombre del producto.",
-            },
-          ]}
-        >
-          <Input />
-        </Form.Item>
-        <Form.Item
-          name="price"
-          label="Precio"
-          rules={[
-            {
-              required: true,
-              message: "Debes ingresar el precio del producto.",
-            },
-          ]}
-        >
-          <InputNumber
-            formatter={(value) =>
-              `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-            }
-          />
-        </Form.Item>
+      <Form name="slideForm" onFinish={onFinish}>
+        <h3>Cargar Slide</h3>
         <Form.Item
           name="picture"
           label="Foto"
           rules={[
             {
               required: true,
-              message: "Debes elegir una imagen para el producto.",
+              message: "Debes elegir una foto para el slide.",
             },
           ]}
         >
@@ -131,7 +97,7 @@ export default function ProductForm() {
         </Form.Item>
         <Form.Item>
           <Button htmlType="submit" type="primary" loading={loading}>
-            Crear Producto
+            Crear Slide
           </Button>
         </Form.Item>
       </Form>

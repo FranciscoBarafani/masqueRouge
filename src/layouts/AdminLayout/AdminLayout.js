@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 //Components
 import { Row, Col, Button, Menu } from "antd";
+import { Link } from "react-router-dom";
 import {
   MenuUnfoldOutlined,
   MenuFoldOutlined,
   TagsOutlined,
   LogoutOutlined,
+  AppstoreOutlined,
+  PictureOutlined,
 } from "@ant-design/icons";
 //Firebase
 import firebase from "../../utils/Firebase";
@@ -26,10 +29,6 @@ export default function AdminLayout() {
       .signOut()
       .then(() => setUser(null))
       .catch(() => console.log("Error al cerrar sesión."));
-  };
-
-  const toProducts = () => {
-    window.history.pushState("", "", "/admin/products");
   };
 
   return (
@@ -55,15 +54,17 @@ export default function AdminLayout() {
                   theme="dark"
                   inlineCollapsed={collapsed}
                 >
-                  <Menu.Item
-                    key="1"
-                    icon={<TagsOutlined />}
-                    onClick={() => toProducts()}
-                  >
-                    Cargar Productos
+                  <Menu.Item key="1" icon={<TagsOutlined />}>
+                    <Link to="/admin/products">Cargar Producto</Link>
+                  </Menu.Item>
+                  <Menu.Item key="2" icon={<AppstoreOutlined />}>
+                    <Link to="/admin/adds">Cargar Propaganda</Link>
+                  </Menu.Item>
+                  <Menu.Item key="3" icon={<PictureOutlined />}>
+                    <Link to="/admin/slides">Cargar Slide</Link>
                   </Menu.Item>
                   <Menu.Item
-                    key="2"
+                    key="4"
                     icon={<LogoutOutlined />}
                     onClick={() => logOut()}
                   >
