@@ -1,24 +1,50 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 //Components
 import { Card as MyCard } from "antd";
 import { Link } from "react-router-dom";
+//Firebase
+import firebase from "../../utils/Firebase";
+import "firebase/storage";
+
+import "./Card.scss";
 
 export default function Card(props) {
-  const { title } = props;
+  const { title, description, picture } = props;
+  const [image, setImage] = useState(null);
+
+  const storageRef = firebase.storage().ref();
+  const imageRef = storageRef.child("products");
+
+  useEffect(() => {
+    getImage();
+  }, []);
+
+  const getImage = () => {
+    imageRef
+      .child(`${picture}`)
+      .getDownloadURL()
+      .then((url) => {
+        setImage(url);
+      });
+  };
+
   return (
-    <Link to="/checkout">
-      <MyCard
-        hoverable
-        style={{ width: 240 }}
-        cover={
-          <img
-            alt="example"
-            src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png"
-          />
-        }
-      >
-        <MyCard.Meta title={"$650"} description="Desripcion del Producto" />
-      </MyCard>
-    </Link>
+    <div className="card">
+      <Link to="/checkout">
+        <MyCard
+          hoverable
+          style={{ width: 240, height: 260 }}
+          cover={
+            <img
+              alt={description}
+              src={image}
+              style={{ maxWidth: 240, maxHeight: 180 }}
+            />
+          }
+        >
+          <MyCard.Meta title={`$${title}`} description={description} />
+        </MyCard>
+      </Link>
+    </div>
   );
 }

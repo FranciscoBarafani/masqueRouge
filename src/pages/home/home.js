@@ -1,74 +1,56 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 //Components
-import { Row, Col } from "antd";
 import Carousel from "../../components/Carousel";
 import AddsSlider from "../../components/AddsSlider";
+import { each } from "async";
+import Adds from "../../components/Adds";
 import firebase from "../../utils/Firebase";
-//Images
-import img1 from "../../assets/add1.jpeg";
-import img2 from "../../assets/add2.jpeg";
-import img3 from "../../assets/add3.jpeg";
-import img4 from "../../assets/add4.jpeg";
-import img5 from "../../assets/add5.jpeg";
-import img6 from "../../assets/add6.jpeg";
 
 import "./home.scss";
 
-export default function home() {
+const db = firebase.firestore(firebase);
+
+export default function Home() {
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    getProducts();
+  }, []);
+
+  //This function gets the products from firebase
+  const getProducts = () => {
+    const random = Math.random();
+    db.collection("products")
+      .where("random", ">=", 0)
+      .limit(10)
+      .get()
+      .then((response) => {
+        const products = [];
+        each(
+          response.docs,
+          (doc, callback) => {
+            const data = doc.data();
+            data.id = doc.id;
+            products.push(data);
+            callback();
+          },
+          () => {
+            setProducts(products);
+            setLoading(false);
+            console.log(products);
+          }
+        );
+      })
+      .catch(() => console.log("Error al obtener productos."));
+  };
+
   return (
     <div className="home">
       <AddsSlider />
       <div className="home-body">
-        <Carousel />
-        <Carousel />
-        <div className="home-adds">
-          <Row gutter={[10, 10]}>
-            <Col span={6}>
-              <img
-                src={img1}
-                alt="Propaganda 1"
-                style={{ width: "100%", height: "100%" }}
-              />
-            </Col>
-            <Col span={6}>
-              <img
-                src={img2}
-                alt="Propaganda 2"
-                style={{ width: "100%", height: "100%" }}
-              />
-            </Col>
-            <Col span={12}>
-              <img
-                src={img3}
-                alt="Propaganda 3"
-                style={{ width: "100%", height: "100%" }}
-              />
-            </Col>
-          </Row>
-          <Row gutter={[10, 10]}>
-            <Col span={12}>
-              <img
-                src={img4}
-                alt="Propaganda 4"
-                style={{ width: "100%", height: "100%" }}
-              />
-            </Col>
-            <Col span={6}>
-              <img
-                src={img5}
-                alt="Propaganda 5"
-                style={{ width: "100%", height: "100%" }}
-              />
-            </Col>
-            <Col span={6}>
-              <img
-                src={img6}
-                alt="Propaganda 6"
-                style={{ width: "100%", height: "100%" }}
-              />
-            </Col>
-          </Row>
-        </div>
+        {!loading && products ? <Carousel products={products} /> : <></>}
+        <Adds />
       </div>
     </div>
   );

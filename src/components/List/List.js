@@ -19,7 +19,11 @@ export default function List(props) {
       dataSource={data}
       renderItem={(item) => (
         <MyList.Item>
-          <Card title={item.title} />
+          <Card
+            title={item.price}
+            description={item.name}
+            picture={item.picture}
+          />
         </MyList.Item>
       )}
     />

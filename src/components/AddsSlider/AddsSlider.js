@@ -1,27 +1,77 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+//Firebase
+import firebase from "../../utils/Firebase";
+import "firebase/firestore";
+import { each } from "async";
 //Components
 import { Carousel } from "antd";
-//Images
-import img1 from "../../assets/slideradd1.webp";
-import img2 from "../../assets/slideradd2.webp";
-import img3 from "../../assets/slideradd3.webp";
 
 import "./AddsSlider.scss";
 
+const db = firebase.firestore(firebase);
+
 export default function AddSlider() {
+  const [isLoading, setIsLoading] = useState(true);
+  const [images, setImages] = useState(null);
+
+  useEffect(() => {
+    getSlides();
+  }, []);
+
+  //This function gets the slides and their images urls
+  const getSlides = () => {
+    const storageRef = firebase.storage().ref();
+    const imageRef = storageRef.child("slides");
+
+    const random = Math.random();
+    var dataSet = [];
+    db.collection("slides")
+      .where("random", ">=", 0)
+      .orderBy("random")
+      .limit(3)
+      .get()
+      .then((response) => {
+        each(
+          response.docs,
+          (slide, callback) => {
+            const data = slide.data();
+            data.id = slide.id;
+            imageRef
+              .child(`${data.picture}`)
+              .getDownloadURL()
+              .then((url) => {
+                data.url = url;
+                dataSet.push(data);
+                callback();
+              });
+          },
+          () => {
+            setImages(dataSet);
+            setIsLoading(false);
+          }
+        );
+      });
+  };
+
   return (
     <div className="add-slider">
-      <Carousel autoplay>
+      {!isLoading && images ? (
         <div>
-          <img src={img1} alt="Propaganda 1" />
+          <Carousel autoplay>
+            <div>
+              <img src={images[0].url} alt="Propaganda 1" />
+            </div>
+            <div>
+              <img src={images[1].url} alt="Propaganda 2" />
+            </div>
+            <div>
+              <img src={images[2].url} alt="Propaganda 3" />
+            </div>
+          </Carousel>
         </div>
-        <div>
-          <img src={img2} alt="Propaganda 2" />
-        </div>
-        <div>
-          <img src={img3} alt="Propaganda 3" />
-        </div>
-      </Carousel>
+      ) : (
+        <></>
+      )}
     </div>
   );
 }
