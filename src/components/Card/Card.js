@@ -17,8 +17,9 @@ export default function Card(props) {
 
   useEffect(() => {
     getImage();
-  }, []);
+  }, [props]);
 
+  //This function gets the product image
   const getImage = () => {
     imageRef
       .child(`${picture}`)
@@ -30,7 +31,7 @@ export default function Card(props) {
 
   return (
     <div className="card">
-      <Link to="/checkout">
+      <Link to="/home/checkout">
         <MyCard
           hoverable
           style={{ width: 240, height: 260 }}

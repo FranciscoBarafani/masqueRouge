@@ -8,8 +8,6 @@ import "./Carousel.scss";
 export default function Carousel(props) {
   const { products } = props;
 
-  console.log(products);
-
   return (
     <div className="carousel">
       <Car autoplay>

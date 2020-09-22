@@ -1,6 +1,6 @@
 import React from "react";
 //Components
-import { Form, Input, Button } from "antd";
+import { Form, Input, Button, message } from "antd";
 //Firebase
 import firebase from "../../utils/Firebase";
 
@@ -22,10 +22,14 @@ export default function LoginForm(props) {
       .auth()
       .signInWithEmailAndPassword(values.email, values.password)
       .then((user) => {
+        message.success("Inicio de sesión correcto.");
         setUser(user);
-        console.log(user);
       })
-      .catch((error) => console.log(error));
+      .catch(() =>
+        message.error(
+          "Error al iniciar sesión, corrobore los datos ingresados."
+        )
+      );
   };
 
   return (

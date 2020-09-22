@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 //Components
-import { Form, Input, InputNumber, Button, Upload, Modal, message } from "antd";
+import { Form, Input, InputNumber, Button, Upload, Modal } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 //Functions
 import { uploadObject } from "../../utils/FirebaseUploads";

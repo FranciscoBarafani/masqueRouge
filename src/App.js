@@ -9,8 +9,8 @@ import {
 import MainLayout from "./layouts/MainLayout";
 import AdminLayout from "./layouts/AdminLayout";
 
-import "antd/dist/antd.css";
-import "./App.css";
+import "antd/dist/antd.less";
+import "./App.less";
 
 function App() {
   return (

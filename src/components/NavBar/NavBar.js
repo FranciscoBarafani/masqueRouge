@@ -1,5 +1,5 @@
 import React from "react";
-import { Input, Col, Row, Button, Dropdown, Menu } from "antd";
+import { Col, Row, Button, Dropdown, Menu } from "antd";
 import { Link } from "react-router-dom";
 import {
   ShoppingCartOutlined,
@@ -11,8 +11,6 @@ import "./NavBar.scss";
 
 export default function NavBar(props) {
   const { setIsVisible } = props;
-
-  const { Search } = Input;
 
   const menu = (
     <Menu>
@@ -29,11 +27,11 @@ export default function NavBar(props) {
     <div className="nav-bar">
       <Row justify="space-between" align="middle">
         <Col span={4}>
-          <h3>MasqueRouge</h3>
+          <Link to="/home">
+            <h3>MasqueRouge</h3>
+          </Link>
         </Col>
-        <Col span={8}>
-          <Search placeholder="Buscar..." enterButton />
-        </Col>
+        <Col span={8}></Col>
         <Col span={4}>
           <Link to="/admin">
             <Button

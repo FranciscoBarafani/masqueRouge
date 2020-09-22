@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import firebase from "../../utils/Firebase";
 import "firebase/firestore";
 import { each } from "async";
+import { map } from "lodash";
 //Components
 import { Carousel } from "antd";
 
@@ -13,43 +14,60 @@ const db = firebase.firestore(firebase);
 export default function AddSlider() {
   const [isLoading, setIsLoading] = useState(true);
   const [images, setImages] = useState(null);
+  const storageRef = firebase.storage().ref();
+  const imageRef = storageRef.child("slides");
 
   useEffect(() => {
     getSlides();
   }, []);
 
+  const getImages = (docs, dataSet) => {
+    each(
+      docs.docs,
+      (slide, callback) => {
+        const data = slide.data();
+        data.id = slide.id;
+        imageRef
+          .child(`${data.picture}`)
+          .getDownloadURL()
+          .then((url) => {
+            data.url = url;
+            dataSet.push(data);
+            callback();
+          });
+      },
+      () => {
+        setImages(dataSet);
+        setIsLoading(false);
+      }
+    );
+  };
+
   //This function gets the slides and their images urls
   const getSlides = () => {
-    const storageRef = firebase.storage().ref();
-    const imageRef = storageRef.child("slides");
-
     const random = Math.random();
     var dataSet = [];
     db.collection("slides")
-      .where("random", ">=", 0)
+      .where("random", ">=", random)
       .orderBy("random")
       .limit(3)
       .get()
       .then((response) => {
-        each(
-          response.docs,
-          (slide, callback) => {
-            const data = slide.data();
-            data.id = slide.id;
-            imageRef
-              .child(`${data.picture}`)
-              .getDownloadURL()
-              .then((url) => {
-                data.url = url;
-                dataSet.push(data);
-                callback();
-              });
-          },
-          () => {
-            setImages(dataSet);
-            setIsLoading(false);
-          }
-        );
+        var docs = response;
+        if (response.docs.length === 0) {
+          db.collection("slides")
+            .where("random", "<=", random)
+            .orderBy("random")
+            .limit(3)
+            .get()
+            .then((response) => {
+              docs = response;
+              getImages(docs, dataSet);
+            })
+            .catch((error) => console.log(error));
+        } else {
+          getImages(docs, dataSet);
+        }
       });
   };
 
@@ -58,15 +76,11 @@ export default function AddSlider() {
       {!isLoading && images ? (
         <div>
           <Carousel autoplay>
-            <div>
-              <img src={images[0].url} alt="Propaganda 1" />
-            </div>
-            <div>
-              <img src={images[1].url} alt="Propaganda 2" />
-            </div>
-            <div>
-              <img src={images[2].url} alt="Propaganda 3" />
-            </div>
+            {map(images, (image) => (
+              <div>
+                <img src={image.url} alt={`${image.url}`} />
+              </div>
+            ))}
           </Carousel>
         </div>
       ) : (
