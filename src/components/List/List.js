@@ -14,7 +14,7 @@ export default function List(props) {
         md: 5,
         lg: 5,
         xl: 5,
-        xxl: 3,
+        xxl: 5,
       }}
       dataSource={data}
       renderItem={(item) => (
