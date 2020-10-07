@@ -5,7 +5,7 @@ import AddsSlider from "../../components/AddsSlider";
 import { each } from "async";
 import Adds from "../../components/Adds";
 import firebase from "../../utils/Firebase";
-import { Input, Row, Col } from "antd";
+import { Input, Row, Col, Pagination } from "antd";
 import { FireSQL } from "firesql";
 import "./home.scss";
 
@@ -14,6 +14,9 @@ const fireSQL = new FireSQL(firebase.firestore(), { includeId: "id" });
 const db = firebase.firestore(firebase);
 
 export default function Home() {
+  const [totalItems, setTotalItems] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [currentList, setCurrentList] = useState([]);
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -23,11 +26,26 @@ export default function Home() {
     getProducts();
   }, []);
 
+  useEffect(() => {
+    if (!loading || products) {
+      setTotalItems(products.length);
+      //Assigning starting page as 1 and initial page size as 10
+      setCurrentList(products.slice(0, 10));
+    }
+  }, [products, loading]);
+
+  //This function is called everytime the page is changed,
+  //Slicing the result array in an smaller portion
+  const onChangePage = (page, pageSize) => {
+    setCurrentPage(page);
+    setCurrentList(products.slice((page - 1) * pageSize, page * pageSize));
+  };
+
   //This function gets the products from firebase
   const getProducts = () => {
     db.collection("products")
       .where("random", ">=", 0)
-      .limit(15)
+
       .get()
       .then((response) => {
         const products = [];
@@ -75,7 +93,24 @@ export default function Home() {
         </Col>
       </Row>
       <div className="home-body">
-        {!loading && products ? <Carousel products={products} /> : <></>}
+        {!loading && currentList ? (
+          <>
+            <Carousel products={currentList} />
+            <Pagination
+              total={totalItems}
+              current={currentPage}
+              showSizeChanger
+              pageSizeOptions={[10, 25, 50, 100]}
+              onChange={onChangePage}
+              showTotal={(total, range) =>
+                `${range[0]}-${range[1]} de ${total} productos`
+              }
+            />
+          </>
+        ) : (
+          <></>
+        )}
+
         <Adds />
       </div>
     </div>
