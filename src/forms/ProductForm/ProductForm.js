@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 //Components
-import { Form, Input, InputNumber, Button, Upload, Modal } from "antd";
+import { Form, Input, InputNumber, Button, Upload, Modal, message } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 //Functions
 import { uploadObject } from "../../utils/FirebaseUploads";
@@ -50,9 +50,27 @@ export default function ProductForm() {
     setPreviewVisible(true);
   };
 
+  //in case it doesnt it returns a false, so when the handleChange is executed it won't add the image
+  //to the state.
+  const beforeUpload = (file) => {
+    if (file.type !== "image/jpeg") {
+      message.error("La imagen no es jpeg.");
+      return false;
+    } else if (file.size > 256000) {
+      message.error("El tamaño maximo de imagen es 256KB");
+      return false;
+    }
+    return file.type === "image/jpeg";
+  };
+
   //This handler adds the selected images to the parent state
-  const handleChange = ({ fileList }) => {
-    setImage({ fileList });
+  const handleChange = async (info) => {
+    setImage({ fileList: info.fileList.filter((file) => !!file.status) });
+  };
+
+  //This functions eliminates the image from the state when deleted icon is clicked
+  const onRemove = () => {
+    setImage({ fileList: [] });
   };
 
   //This function is to override the automatic POST request sent by
@@ -109,8 +127,10 @@ export default function ProductForm() {
             <Upload
               customRequest={dummyRequest}
               listType="picture-card"
+              onRemove={onRemove}
               onPreview={handlePreview}
               onChange={handleChange}
+              beforeUpload={beforeUpload}
               fileList={image.fileList}
             >
               {image.fileList.length >= 1 ? null : (

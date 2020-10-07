@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 //Components
-import { Form, Button, Upload, Modal } from "antd";
+import { Form, Button, Upload, Modal, message } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { uploadObject } from "../../utils/FirebaseUploads";
 
@@ -44,9 +44,27 @@ export default function SlideForm() {
     setPreviewVisible(true);
   };
 
+  //in case it doesnt it returns a false, so when the handleChange is executed it won't add the image
+  //to the state.
+  const beforeUpload = (file) => {
+    if (file.type !== "image/jpeg") {
+      message.error("La imagen no es jpeg.");
+      return false;
+    } else if (file.size > 256000) {
+      message.error("El tamaño maximo de imagen es 256KB");
+      return false;
+    }
+    return file.type === "image/jpeg";
+  };
+
   //This handler adds the selected images to the parent state
-  const handleChange = ({ fileList }) => {
-    setImage({ fileList });
+  const handleChange = async (info) => {
+    setImage({ fileList: info.fileList.filter((file) => !!file.status) });
+  };
+
+  //This functions eliminates the image from the state when deleted icon is clicked
+  const onRemove = () => {
+    setImage({ fileList: [] });
   };
 
   //This function is to override the automatic POST request sent by
@@ -78,6 +96,8 @@ export default function SlideForm() {
               onPreview={handlePreview}
               onChange={handleChange}
               fileList={image.fileList}
+              onRemove={onRemove}
+              beforeUpload={beforeUpload}
             >
               {image.fileList.length >= 1 ? null : (
                 <div>
