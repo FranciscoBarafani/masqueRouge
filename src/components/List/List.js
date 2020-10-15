@@ -4,7 +4,7 @@ import { List as MyList } from "antd";
 import Card from "../Card";
 
 export default function List(props) {
-  const { data } = props;
+  const { data, addToCart } = props;
   return (
     <MyList
       grid={{
@@ -23,6 +23,8 @@ export default function List(props) {
             title={item.price}
             description={item.name}
             picture={item.picture}
+            addToCart={addToCart}
+            id={item.id}
           />
         </MyList.Item>
       )}

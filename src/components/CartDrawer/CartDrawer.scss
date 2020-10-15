@@ -1,5 +1,8 @@
 .cartDrawer {
   .ant-drawer {
+    display: flex;
+    align-self: center;
+    justify-content: center;
     &-header {
       background: #3e2f5b;
     }
@@ -13,5 +16,12 @@
         color: lightgray;
       }
     }
+  }
+  .buy-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
   }
 }

@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from "react";
 //Components
-import { Card as MyCard } from "antd";
-import { Link } from "react-router-dom";
+import { Card as MyCard, Button } from "antd";
 //Firebase
 import firebase from "../../utils/Firebase";
 import "firebase/storage";
 
-import "./Card.scss";
-
 export default function Card(props) {
-  const { title, description, picture } = props;
+  const { title, description, picture, id,  addToCart } = props;
   const [image, setImage] = useState(null);
 
   const storageRef = firebase.storage().ref();
@@ -29,23 +26,38 @@ export default function Card(props) {
       });
   };
 
+  //Create Product to add to Cart
+  const addProduct = () => {
+    const product = {
+      id: id,
+      name: description,
+      price: title,
+      picture: image,
+      quantity: 1,
+    }
+    addToCart(product, id);
+  }
+
   return (
     <div className="card">
-      <Link to="/home/checkout">
         <MyCard
           hoverable
-          style={{ width: 240, height: 260 }}
+          style={{ width: 240, height: 320 }}
+          actions={[
+            <Button onClick={() => addProduct()}>Agregar al Carrito</Button>
+          ]}
           cover={
+            <div style={{display: "flex", alignItems: "center", justifyContent: "center"}}>
             <img
               alt={description}
               src={image}
-              style={{ maxWidth: 240, maxHeight: 180 }}
+              style={{ maxWidth: 220, height: 160 }}
             />
+            </div>
           }
         >
           <MyCard.Meta title={`$${title}`} description={description} />
         </MyCard>
-      </Link>
     </div>
   );
 }

@@ -4,11 +4,12 @@ import { Route, Switch } from "react-router-dom";
 import Home from "../../pages/home";
 import CheckOut from "../../pages/checkOut";
 
-export default function MainRoutes() {
+export default function MainRoutes(props) {
+  const { addToCart } = props; 
   return (
     <Switch>
       <Route path="/home" exact>
-        <Home />
+        <Home addToCart={addToCart} />
       </Route>
       <Route path="/home/checkout" exact>
         <CheckOut />

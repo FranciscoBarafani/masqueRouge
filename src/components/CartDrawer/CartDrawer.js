@@ -1,11 +1,12 @@
 import React from "react";
 //Components
-import { Drawer } from "antd";
+import { Drawer, Button } from "antd";
+import CartList from "../CartList";
 
 import "./CartDrawer.scss";
 
 export default function CartDrawer(props) {
-  const { isVisible, setIsVisible } = props;
+  const { isVisible, setIsVisible, cart, removeProduct, increaseProductQuantity,decreaseProductQuantity } = props;
 
   const onClose = () => {
     setIsVisible(false);
@@ -21,7 +22,14 @@ export default function CartDrawer(props) {
       visible={isVisible}
       width={400}
     >
-      <p>Producots</p>
+      <CartList 
+      cart={cart} 
+      removeProduct={removeProduct} 
+      increaseProductQuantity={increaseProductQuantity} 
+      decreaseProductQuantity={decreaseProductQuantity}/>
+      <div className="buy-btn">
+      <Button type="primary">Comprar</Button>
+      </div>
     </Drawer>
   );
 }

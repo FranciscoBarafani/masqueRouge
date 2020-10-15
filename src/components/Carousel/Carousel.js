@@ -6,13 +6,13 @@ import List from "../List";
 import "./Carousel.scss";
 
 export default function Carousel(props) {
-  const { products } = props;
+  const { products, addToCart } = props;
 
   return (
     <div className="carousel">
       <Car autoplay>
         <div>
-          <List data={products} />
+          <List data={products} addToCart={addToCart}/>
         </div>
       </Car>
     </div>

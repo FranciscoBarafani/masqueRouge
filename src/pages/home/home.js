@@ -13,7 +13,9 @@ const fireSQL = new FireSQL(firebase.firestore(), { includeId: "id" });
 
 const db = firebase.firestore(firebase);
 
-export default function Home() {
+export default function Home(props) {
+  const { addToCart } = props;
+
   const [totalItems, setTotalItems] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [currentList, setCurrentList] = useState([]);
@@ -95,7 +97,7 @@ export default function Home() {
       <div className="home-body">
         {!loading && currentList ? (
           <>
-            <Carousel products={currentList} />
+            <Carousel products={currentList} addToCart={addToCart}/>
             <Pagination
               total={totalItems}
               current={currentPage}
