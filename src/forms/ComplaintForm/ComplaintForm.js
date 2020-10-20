@@ -1,23 +1,32 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 //Components
-import { Form, Input, Button, Select, Row, Col, Modal, Result } from "antd";
+import { Form, Input, Button, Select, Row, Col, Modal, Result, message } from "antd";
+import firebase from "../../utils/Firebase";
 
 import "./ComplaintForm.scss";
 
-export default function ComplaintForm(props) {
-  const { setLocation } = props;
+const db = firebase.firestore(firebase);
+
+export default function ComplaintForm() {
   const [isVisible, setisVisible] = useState(false);
+  const [location, setLocation] = useState(null);
+  const [isLoading, setIsLoading] = useState(false)
 
   const { Option } = Select;
 
+  useEffect(() => {
+    getLocation();
+  }, [])
+
+
+
   //This function gets the user location
-  const getLocation = () => {
+  const getLocation = async () => {
     var location = { latitude: 0, longitude: 0 };
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition((position) => {
         location.latitude = position.coords.latitude;
         location.longitude = position.coords.longitude;
-        console.log(location);
         setLocation(location);
       });
     } else {
@@ -25,10 +34,21 @@ export default function ComplaintForm(props) {
     }
   };
 
-  const onFinish = (values) => {
-    getLocation();
-    setisVisible(true);
-    console.log(values);
+  //Post Complaint function - Parameters: Form Values, User's location
+  const postComplaint = (complaint, location) => {
+    var finalComplaint = {...complaint, location};
+    db.collection("complaints")
+    .add(finalComplaint)
+    .then(() => {
+      setisVisible(true);
+    }).catch(() => message.error("Error al procesar pedido, por favor intentelo nuevamente."))
+    setIsLoading(false);
+  }
+
+  //Executes when form is finished and correct
+  const onFinish = async (complaint) => {
+    setIsLoading(true);
+    postComplaint(complaint, location);
   };
 
   return (
@@ -119,7 +139,7 @@ export default function ComplaintForm(props) {
        </Form.Item>
        <Row>
         <Form.Item>
-          <Button htmlType="submit" type="primary">Confirmar Pedido</Button>
+          <Button htmlType="submit" type="primary" loading={isLoading}>Confirmar Pedido</Button>
         </Form.Item>
         </Row>
       </Form>

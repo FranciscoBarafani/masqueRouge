@@ -9,7 +9,6 @@ import "./checkOut.scss";
 
 export default function CheckOut(props) {
   const {  cart,increaseProductQuantity, decreaseProductQuantity, removeProduct } = props; 
-  const [location, setLocation] = useState("");
   const [isVisible, setIsVisible] = useState(false);
 
   const [total, setTotal] = useState(0);
@@ -46,7 +45,7 @@ export default function CheckOut(props) {
              <h2>Confirmación de Pedido </h2>
           <Button onClick={() => setIsVisible(true)} style={{marginLeft: 20, marginBottom: 10}}><QuestionCircleOutlined style={{fontWeight: 25}}/></Button>
           </div>
-        <ComplaintForm setLocation={setLocation} />
+        <ComplaintForm />
         </div>
         </Col>
         <Col sm={8}>
