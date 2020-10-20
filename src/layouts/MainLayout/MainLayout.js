@@ -67,7 +67,9 @@ export default function MainLayout() {
       removeProduct={removeProduct}
       />
       <div style={{ marginTop: 50 }}>
-        <MainRoutes addToCart={addToCart} />
+        <MainRoutes addToCart={addToCart} cart={cart}  increaseProductQuantity={increaseProductQuantity}
+      decreaseProductQuantity={decreaseProductQuantity}
+      removeProduct={removeProduct}/>
       </div>
       <Footer />
       <ChatButton />

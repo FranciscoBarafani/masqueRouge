@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 //Components
-import { Form, Input, Button, Select, InputNumber } from "antd";
+import { Form, Input, Button, Select, Row, Col, Modal, Result } from "antd";
 
 import "./ComplaintForm.scss";
 
 export default function ComplaintForm(props) {
   const { setLocation } = props;
+  const [isVisible, setisVisible] = useState(false);
 
   const { Option } = Select;
 
@@ -26,61 +27,101 @@ export default function ComplaintForm(props) {
 
   const onFinish = (values) => {
     getLocation();
+    setisVisible(true);
     console.log(values);
   };
 
   return (
     <div className="complaint-form">
+      <Modal visible={isVisible} footer={false} closable={false}>
+      <Result
+    status="success"
+    title="Tu pedido ha sido confirmado"
+    subTitle="Nos contactaremos contigo en las próximas horas para enviarte la información del pago."
+    extra={[
+      <Button key="buy" onClick={() => setisVisible(false)}>Ok</Button>,
+    ]}
+  />
+      </Modal>
       <Form
-        labelCol={{ span: 5 }}
-        wrapperCol={{ span: 16 }}
+        wrapperCol={{ span: 24 }}
         onFinish={onFinish}
       >
-        <Form.Item name="name">
-          <Input placeholder="Nombre" />
+       <Row  gutter={10}>
+        <Col >
+        <Form.Item name="name"
+             rules={[{ required: true, message: 'Por favor introduce tu nombre' }]}
+        >
+          <Input placeholder="Nombre"/>
         </Form.Item>
-        <Form.Item name="lastname">
-          <Input placeholder="Apellido" />
+        </Col>
+        <Col>
+        <Form.Item name="lastname"
+                       rules={[{ required: true, message: 'Por favor introduce tu apellido' }]}
+        > 
+        <Input placeholder="Apellido"/>
         </Form.Item>
-        <Form.Item name="dni">
-          <Input placeholder="DNI" />
+        </Col>
+       </Row>
+       <Row  gutter={10}>
+       <Col>
+       <Form.Item name="id"
+                     rules={[{ required: true, message: 'Por favor introduce tu DNI' }]}
+       >
+        <Input placeholder="Nro Documento" />
         </Form.Item>
-        <Form.Item name="phoneNumber">
-          <Input placeholder="Teléfono" />
+       </Col>
+       <Col>
+       <Form.Item name="email"
+                     rules={[{ required: true, message: 'Por favor introduce tu mail' }]}
+       >
+        <Input placeholder="Correo electronico" />
         </Form.Item>
+       </Col>
+       </Row>
+       <Row  gutter={10}>
+          <Col>
+            <Form.Item name="street"
+                           rules={[{ required: true, message: 'Por favor introduce la calle' }]}
+            >
+              <Input placeholder="Calle"/>
+            </Form.Item>
+          </Col>
+          <Col>
+          <Form.Item name="number"
+                         rules={[{ required: true, message: 'Por favor introduce el número de calle' }]}
+          >
+              <Input placeholder="Numero"/>
+            </Form.Item>
+            </Col>
+          <Col>
+          <Form.Item name="deck">
+              <Input placeholder="Piso"/>
+            </Form.Item>
+          </Col>
+       </Row>
+       <Form.Item name="deliverType"    rules={[{ required: true, message: 'Por favor  seleccione el tipo de envío' }]}>
+         <Select placeholder="Tipo de Envío"
+                    
+         >
+           <Option value="express">
+             Envío Express (Hasta 24 horas)
+           </Option>
+           <Option value="normal">
+             Envío Normal (Hasta 7 días hábiles)
+           </Option>
+         </Select>
+       </Form.Item>
+       <Form.Item name="phone"
+                       rules={[{ required: true, message: 'Por favor introduce tu número de teléfono' }]}
+       >
+          <Input placeholder="Número de Teléfono"/>
+       </Form.Item>
+       <Row>
         <Form.Item>
-          <Select placeholder="Tipo de Envío">
-            <Option>Envío Express</Option>
-            <Option>Envío en 7 días</Option>
-          </Select>
+          <Button htmlType="submit" type="primary">Confirmar Pedido</Button>
         </Form.Item>
-        <Form.Item name="street">
-          <Input placeholder="Calle" />
-        </Form.Item>
-        <Form.Item name="cp">
-          <Input placeholder="Código Postal" />
-        </Form.Item>
-        <Form.Item name="streetNumber">
-          <InputNumber placeholder="Número" />
-        </Form.Item>
-        <Form.Item name="deck">
-          <InputNumber placeholder="Piso" />
-        </Form.Item>
-        <Form.Item name="deparment">
-          <InputNumber placeholder="Depto" />
-        </Form.Item>
-        <Form.Item name="province">
-          <Select placeholder="Provincia">
-            <Option>Córdoba</Option>
-            <Option>Mendoza</Option>
-          </Select>
-        </Form.Item>
-        <Form.Item name="city">
-          <Input placeholder="Ciudad" />
-        </Form.Item>
-        <Form.Item>
-          <Button htmlType="submit">Probar Formulario</Button>
-        </Form.Item>
+        </Row>
       </Form>
     </div>
   );

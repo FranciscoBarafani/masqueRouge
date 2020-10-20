@@ -1,14 +1,10 @@
-import React, {useEffect, useState} from 'react'
+import React from 'react'
 //Components
 import { List, Avatar, Button } from "antd";
 import { DeleteOutlined, ShoppingCartOutlined } from "@ant-design/icons"
 
 export default function CartList(props) {
-    const { cart, removeProduct, increaseProductQuantity, decreaseProductQuantity } = props;
-    const [refresh, setRefresh] = useState(false);
-
-    useEffect(() => {
-    }, [refresh])
+    const { cart, removeProduct, increaseProductQuantity, decreaseProductQuantity, refresh, setRefresh } = props;   
 
     return (  
     <List
