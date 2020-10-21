@@ -31,6 +31,7 @@ export default function MainLayout() {
     setCart(newCart);
   };
 
+
   //Increase Quantity - Returns JSON with the selected product with an extra quantity
   const increaseProductQuantity = (product) => {
     var newCart = cart;

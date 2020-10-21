@@ -1,9 +1,13 @@
 import React from 'react';
-import { render } from '@testing-library/react';
-import App from './App';
+import renderer from 'react-test-renderer';
+import CartList from './components/CartList';
 
-test('renders learn react link', () => {
-  const { getByText } = render(<App />);
-  const linkElement = getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+
+//Components Rendering Correctly
+test('CartList renders correctly', () => {
+  const component = renderer.create(
+    <CartList />,
+  );
+  let tree = component.toJSON();
+  expect(tree).toMatchSnapshot();
 });
