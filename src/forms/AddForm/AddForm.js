@@ -87,7 +87,7 @@ export default function AddForm() {
           rules={[
             {
               required: true,
-              message: "Debes elegir una imagen para la propaganad.",
+              message: "Debes elegir una imagen para la propaganda.",
             },
           ]}
         >

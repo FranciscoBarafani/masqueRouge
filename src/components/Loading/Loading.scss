@@ -1,0 +1,13 @@
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 50px;
+
+  h1 {
+    font-weight: bold;
+    text-align: center;
+    color: rgb(90, 90, 90);
+  }
+}

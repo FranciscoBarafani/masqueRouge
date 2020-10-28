@@ -8,7 +8,9 @@ import {
   TagsOutlined,
   LogoutOutlined,
   AppstoreOutlined,
+  ExceptionOutlined,
   PictureOutlined,
+  FundViewOutlined,
 } from "@ant-design/icons";
 //Firebase
 import firebase from "../../utils/Firebase";
@@ -20,7 +22,7 @@ import LoginForm from "../../forms/LoginForm";
 import "./AdminLayout.scss";
 
 export default function AdminLayout() {
-  const [user, setUser] = useState(false);
+  const [user, setUser] = useState(true);
   const [collapsed, setCollapsed] = useState(true);
 
   const logOut = () => {
@@ -54,17 +56,23 @@ export default function AdminLayout() {
                   theme="dark"
                   inlineCollapsed={collapsed}
                 >
-                  <Menu.Item key="1" icon={<TagsOutlined />}>
+                   <Menu.Item key="0" icon={<ExceptionOutlined />}>
+                    <Link to="/admin/complaints">Denuncias</Link>
+                  </Menu.Item>
+                  <Menu.Item key="1" icon={<FundViewOutlined />}>
+                    <Link to="/admin/complaints-map">Mapa de Denuncias</Link>
+                  </Menu.Item>
+                  <Menu.Item key="2" icon={<TagsOutlined />}>
                     <Link to="/admin/products">Cargar Producto</Link>
                   </Menu.Item>
-                  <Menu.Item key="2" icon={<AppstoreOutlined />}>
+                  <Menu.Item key="3" icon={<AppstoreOutlined />}>
                     <Link to="/admin/adds">Cargar Propaganda</Link>
                   </Menu.Item>
-                  <Menu.Item key="3" icon={<PictureOutlined />}>
+                  <Menu.Item key="4" icon={<PictureOutlined />}>
                     <Link to="/admin/slides">Cargar Slide</Link>
                   </Menu.Item>
                   <Menu.Item
-                    key="4"
+                    key="5"
                     icon={<LogoutOutlined />}
                     onClick={() => logOut()}
                   >

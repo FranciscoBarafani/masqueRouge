@@ -28,6 +28,7 @@ export default function Card(props) {
 
   //Create Product to add to Cart
   const addProduct = () => {
+
     const product = {
       id: id,
       name: description,

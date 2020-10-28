@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 //Components
-import { Form, Input, Button, Select, Row, Col, Modal, Result, message } from "antd";
+import { Form, Input, InputNumber, Button, Select, Row, Col, Modal, Result, message } from "antd";
 import firebase from "../../utils/Firebase";
 
 import "./ComplaintForm.scss";
@@ -36,7 +36,8 @@ export default function ComplaintForm() {
 
   //Post Complaint function - Parameters: Form Values, User's location
   const postComplaint = (complaint, location) => {
-    var finalComplaint = {...complaint, location};
+    let date = new Date();
+    var finalComplaint = {...complaint, location, date};
     db.collection("complaints")
     .add(finalComplaint)
     .then(() => {
@@ -47,6 +48,7 @@ export default function ComplaintForm() {
 
   //Executes when form is finished and correct
   const onFinish = async (complaint) => {
+    complaint.status = "pending"
     setIsLoading(true);
     postComplaint(complaint, location);
   };
@@ -88,7 +90,7 @@ export default function ComplaintForm() {
        <Form.Item name="id"
                      rules={[{ required: true, message: 'Por favor introduce tu DNI' }]}
        >
-        <Input placeholder="Nro Documento" />
+        <Input placeholder="Nro Documento" maxLength={8} type="number"/>
         </Form.Item>
        </Col>
        <Col>
@@ -111,12 +113,12 @@ export default function ComplaintForm() {
           <Form.Item name="number"
                          rules={[{ required: true, message: 'Por favor introduce el número de calle' }]}
           >
-              <Input placeholder="Numero"/>
+              <Input placeholder="Numero" type="number"/>
             </Form.Item>
             </Col>
           <Col>
           <Form.Item name="deck">
-              <Input placeholder="Piso"/>
+              <Input placeholder="Piso" type="number"/>
             </Form.Item>
           </Col>
        </Row>

@@ -19,7 +19,9 @@ export default function MainLayout() {
     var newCart = cart;
     newCart.push(newProduct);
     var nonDup = uniqBy(newCart, `id`)
-    if(nonDup.length !== newCart.length) message.info("El producto ya se encuentra en el carrito")
+    if(nonDup.length !== newCart.length){message.info("El producto ya se encuentra en el carrito")} else {
+      message.info("Producto agregado al carrito");
+    }
     setCart(nonDup);     
 };
 
