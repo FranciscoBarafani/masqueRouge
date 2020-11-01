@@ -22,7 +22,7 @@ import LoginForm from "../../forms/LoginForm";
 import "./AdminLayout.scss";
 
 export default function AdminLayout() {
-  const [user, setUser] = useState(true);
+  const [user, setUser] = useState(null);
   const [collapsed, setCollapsed] = useState(true);
 
   const logOut = () => {
@@ -56,7 +56,7 @@ export default function AdminLayout() {
                   theme="dark"
                   inlineCollapsed={collapsed}
                 >
-                   <Menu.Item key="0" icon={<ExceptionOutlined />}>
+                  <Menu.Item key="0" icon={<ExceptionOutlined />}>
                     <Link to="/admin/complaints">Denuncias</Link>
                   </Menu.Item>
                   <Menu.Item key="1" icon={<FundViewOutlined />}>
