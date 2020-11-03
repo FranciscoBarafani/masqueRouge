@@ -22,7 +22,7 @@ import LoginForm from "../../forms/LoginForm";
 import "./AdminLayout.scss";
 
 export default function AdminLayout() {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(true);
   const [collapsed, setCollapsed] = useState(true);
 
   const logOut = () => {

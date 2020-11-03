@@ -1,27 +1,12 @@
 import React from "react";
-import { Col, Row, Button, Dropdown, Menu } from "antd";
+import { Col, Row, Button, Menu } from "antd";
 import { Link } from "react-router-dom";
-import {
-  ShoppingCartOutlined,
-  UserOutlined,
-  MenuOutlined,
-} from "@ant-design/icons";
+import { ShoppingCartOutlined, UserOutlined } from "@ant-design/icons";
 
 import "./NavBar.scss";
 
 export default function NavBar(props) {
   const { setIsVisible } = props;
-
-  const menu = (
-    <Menu>
-      <Menu.Item>
-        <p>Menu 1</p>
-      </Menu.Item>
-      <Menu.Item>
-        <p>Menu 2</p>
-      </Menu.Item>
-    </Menu>
-  );
 
   return (
     <div className="nav-bar">
@@ -47,11 +32,6 @@ export default function NavBar(props) {
               />
             }
           />
-          <Dropdown placement="bottomRight" overlay={menu}>
-            <Button
-              icon={<MenuOutlined style={{ fontSize: 25, color: "white" }} />}
-            />
-          </Dropdown>
         </Col>
       </Row>
     </div>
