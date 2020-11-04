@@ -1,0 +1,21 @@
+{
+  "id": "2bf78a69-3dc1-4087-9907-0ee52ba0d9ec",
+  "version": "2.0",
+  "name": "MasqueRouge-FM",
+  "url": "https://keen-ride-527846.netlify.app/home",
+  "tests": [{
+    "id": "a04025fc-e161-470c-b2ef-2be38d21ac3e",
+    "name": "Untitled",
+    "commands": []
+  }],
+  "suites": [{
+    "id": "4fce2360-f13f-4271-93bc-b8f76db904a4",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["a04025fc-e161-470c-b2ef-2be38d21ac3e"]
+  }],
+  "urls": [],
+  "plugins": []
+}
