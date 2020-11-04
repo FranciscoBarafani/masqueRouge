@@ -1,5 +1,5 @@
 import React from "react";
-import { Col, Row, Button, Menu } from "antd";
+import { Col, Row, Button } from "antd";
 import { Link } from "react-router-dom";
 import { ShoppingCartOutlined, UserOutlined } from "@ant-design/icons";
 

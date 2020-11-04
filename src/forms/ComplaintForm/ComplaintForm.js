@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react";
 import {
   Form,
   Input,
-  InputNumber,
   Button,
   Select,
   Row,
@@ -112,6 +111,10 @@ export default function ComplaintForm(props) {
               name="id"
               rules={[
                 { required: true, message: "Por favor introduce tu DNI" },
+                {
+                  pattern: new RegExp(/^\d{8}(?:[-\s]\d{4})?$/),
+                  message: "Formato de DNI incorrecto",
+                },
               ]}
             >
               <Input placeholder="Nro Documento" maxLength={8} type="number" />
@@ -122,6 +125,7 @@ export default function ComplaintForm(props) {
               name="email"
               rules={[
                 { required: true, message: "Por favor introduce tu mail" },
+                { type: "email", message: "Formato de e-mail incorrecto" },
               ]}
             >
               <Input placeholder="Correo electronico" />
@@ -136,7 +140,7 @@ export default function ComplaintForm(props) {
                 { required: true, message: "Por favor introduce la calle" },
               ]}
             >
-              <Input placeholder="Calle" />
+              <Input placeholder="Calle" maxLength={30} />
             </Form.Item>
           </Col>
           <Col>

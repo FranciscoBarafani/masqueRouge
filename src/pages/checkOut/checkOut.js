@@ -45,7 +45,11 @@ export default function CheckOut(props) {
         }
       >
         <h4>Ayuda</h4>
-        <p>Mucho Texto</p>
+        <p>
+          Una vez que confirmes tu pedido nos contactaremos contigo mediante
+          WhatsApp para informarte sobre el medio de pago. Cualquier consulta
+          comunicarse al: +## ## ###
+        </p>
       </Modal>
       <div className="checkout-body">
         <Row justify="center" align="top">
